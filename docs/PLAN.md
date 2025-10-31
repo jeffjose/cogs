@@ -51,6 +51,40 @@ As a Product Manager exploring Android graphics:
 
 ---
 
+### Phase 2b: TextureView (Alternative to SurfaceView)
+
+**Goal**: Learn view-integrated rendering with transformations
+
+**Project**: Same animation but with TextureView
+- Implement `TextureView.SurfaceTextureListener` - similar to SurfaceHolder callbacks
+- Render to SurfaceTexture (OpenGL texture)
+- Apply transformations (rotation, scaling, alpha)
+- Demonstrate smooth view hierarchy integration
+
+**DX Friction Points**:
+- More memory overhead than SurfaceView
+- Slightly more complex API than SurfaceView
+- Must understand SurfaceTexture vs Surface
+- Performance trade-offs not well documented
+
+**What you'll understand**:
+- SurfaceView vs TextureView trade-offs
+- When to use each (overlapping vs performance)
+- SurfaceTexture and GPU texture backing
+- View transformation integration
+- Memory and performance implications
+
+**Key Comparison**:
+| Feature | SurfaceView | TextureView |
+|---------|-------------|-------------|
+| Separate window | Yes | No |
+| View transformations | No | Yes |
+| Overlapping | Limited | Full support |
+| Memory | Lower | Higher |
+| Performance | Better | Slightly worse |
+
+---
+
 ### Phase 3: Native Code + ANativeWindow (C++ Bridge)
 
 **Goal**: Cross the JNI boundary, access surfaces from C++
@@ -128,29 +162,44 @@ As a Product Manager exploring Android graphics:
 
 ---
 
-### Phase 5: SurfaceControl API (Advanced)
+### Phase 5: SurfaceControl + SurfaceControl.Transaction (Advanced)
 
-**Goal**: Direct compositor interaction
+**Goal**: Direct compositor interaction and atomic updates
 
 **Project**: Multi-layer rendering with transaction API
 - Create surfaces via `SurfaceControl`, not Views
-- Layer composition and z-ordering
-- Transaction-based updates
+- Layer composition and z-ordering with explicit control
+- **SurfaceControl.Transaction** - atomic, synchronized updates
+- Apply multiple changes atomically (position, size, z-order, visibility)
 - Buffer submission outside traditional APIs
 - Direct SurfaceFlinger interaction
+- Choreographer-synced frame callbacks
+
+**Key Concepts**:
+- **SurfaceControl**: Represents a surface in the compositor
+- **SurfaceControl.Transaction**: Batch multiple changes, apply atomically
+- **setLayer()**: Explicit z-ordering control
+- **setPosition()**, **setBufferSize()**: Layout control
+- **setVisibility()**, **setAlpha()**: Visual properties
+- **apply()**: Commit all changes atomically
 
 **DX Friction Points**:
 - API 29+ only (version fragmentation)
-- Limited documentation
+- Limited documentation and examples
 - Few examples in the wild
-- Complex transaction model
-- Debugging compositor issues
+- Complex transaction model - must understand commit semantics
+- Debugging compositor issues is difficult
+- Easy to create visual artifacts if timing is wrong
+- Synchronization with vsync requires Choreographer understanding
 
 **What you'll understand**:
-- Android's compositor (SurfaceFlinger)
-- BufferQueue architecture
-- How Android composites the screen
+- Android's compositor (SurfaceFlinger) architecture
+- BufferQueue architecture and producer/consumer model
+- How Android composites the screen at low level
 - Low-level window management
+- Atomic transaction model for graphics
+- Why transactions matter for tear-free updates
+- Direct access to compositor vs View abstraction
 
 ---
 
