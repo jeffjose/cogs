@@ -41,7 +41,7 @@ import android.view.View;
  * - Blocks UI thread if drawing is slow
  * - Not ideal for continuous animation (Phase 2 will solve this with SurfaceView)
  */
-public class CanvasView extends View {
+public class MyCanvasView extends View {
 
     // Paint: Reusable drawing configuration
     // Why private?: Only this class needs it
@@ -58,7 +58,7 @@ public class CanvasView extends View {
     // Constructor: Called when view is created
     // Context: Gives access to app resources, system services
     // AttributeSet: XML attributes (null if created in code like we do)
-    public CanvasView(Context context, AttributeSet attrs) {
+    public MyCanvasView(Context context, AttributeSet attrs) {
         // ALWAYS call super constructor first
         super(context, attrs);
 

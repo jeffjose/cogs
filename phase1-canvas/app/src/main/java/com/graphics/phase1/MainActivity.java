@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * An Activity is a single screen with a UI - the entry point for user interaction.
  * Think of it as a "window" that holds your app's content.
  *
- * This Activity displays our custom CanvasView for drawing graphics.
+ * This Activity displays our custom MyCanvasView for drawing graphics.
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         // 'this' = Context (gives access to app resources, system services)
         // 'null' = AttributeSet (we're not using XML layout attributes)
         // Why null?: We're creating the view in code, not inflating from XML
-        CanvasView canvasView = new CanvasView(this, null);
+        MyCanvasView canvasView = new MyCanvasView(this, null);
 
         // setContentView(): Tells Android what to display on screen
-        // Replaces the Activity's default empty view with our CanvasView
+        // Replaces the Activity's default empty view with our MyCanvasView
         // Alternative: setContentView(R.layout.activity_main) - inflates from XML
         // Why direct view?: Simplest approach for a single custom view
         setContentView(canvasView);
