@@ -6,10 +6,6 @@ build/
 *.dex
 *.class
 
-# Native build artifacts (CMake/NDK)
-.cxx/
-.externalNativeBuild/
-
 # Local configuration
 local.properties
 
@@ -17,9 +13,6 @@ local.properties
 .idea/
 *.iml
 
-# Keystore files
+# Keystore
 *.keystore
 *.jks
-
-# Emulator logs
-/tmp/emulator.log
