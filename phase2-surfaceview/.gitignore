@@ -1,0 +1,18 @@
+# Android build outputs
+.gradle/
+build/
+*.apk
+*.aab
+*.dex
+*.class
+
+# Local configuration
+local.properties
+
+# IDE
+.idea/
+*.iml
+
+# Keystore
+*.keystore
+*.jks

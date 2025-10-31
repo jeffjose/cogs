@@ -41,8 +41,8 @@ emulator -avd Pixel_8_Pro_API_35 &
 This project follows a progressive learning path through Android graphics APIs:
 
 - **[Phase 1: Canvas Drawing](phase1-canvas/)** ✅ - Custom View with Canvas API
-- **Phase 2: SurfaceView** 🚧 - Threading and surface lifecycle
-- **Phase 3: Native ANativeWindow** - JNI and native surfaces
+- **[Phase 2: SurfaceView](phase2-surfaceview/)** ✅ - Threading and surface lifecycle
+- **Phase 3: Native ANativeWindow** 🚧 - JNI and native surfaces
 - **Phase 4: OpenGL ES / Vulkan** - GPU-accelerated rendering
 - **Phase 5: SurfaceControl** - Direct compositor access
 - **Phase 6: HardwareBuffer** - Cross-API buffer sharing
