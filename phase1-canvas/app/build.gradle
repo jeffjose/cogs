@@ -14,6 +14,13 @@ android {
         versionName "1.0"
     }
 
+    // 16KB page size compatibility for Android 15+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file("debug.keystore")
