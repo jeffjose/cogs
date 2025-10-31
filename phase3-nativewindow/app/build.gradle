@@ -24,8 +24,10 @@ android {
             cmake {
                 // C++ standard and compiler flags
                 cppFlags '-std=c++17', '-Wall', '-Werror'
-                // Pass Android log library
+                // Pass Android log library and enable 16KB page alignment
                 arguments '-DANDROID_STL=c++_shared'
+                // 16KB page size compatibility for Android 15+
+                arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
             }
         }
     }

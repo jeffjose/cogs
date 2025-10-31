@@ -40,5 +40,13 @@ target_link_libraries(
     ${log-lib}
 )
 
+# 16KB page size compatibility for Android 15+
+# This ensures the ELF binary is properly aligned for 16KB pages
+target_link_options(
+    phase3native
+    PRIVATE
+    "-Wl,-z,max-page-size=16384"
+)
+
 # Include directories (if we had headers)
 # target_include_directories(phase3native PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
