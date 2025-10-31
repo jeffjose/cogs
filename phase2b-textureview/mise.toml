@@ -1,0 +1,63 @@
+[tools]
+java = "17"
+
+[env]
+ANDROID_HOME = "$HOME/Android/Sdk"
+DISPLAY = ":1"
+
+[tasks.build]
+description = "Build the Android app"
+run = "./gradlew assembleDebug"
+
+[tasks.install]
+description = "Install the app to connected device/emulator"
+run = "adb install -r app/build/outputs/apk/debug/app-debug.apk"
+depends = ["build"]
+
+[tasks.clean]
+description = "Clean build artifacts"
+run = "./gradlew clean"
+
+[tasks.emulator]
+description = "Start the Android emulator"
+run = "emulator -avd Pixel_8_Pro_API_35 -gpu swiftshader_indirect -no-snapshot-load -no-boot-anim"
+
+[tasks."emulator:bg"]
+description = "Start the Android emulator in background"
+run = "emulator -avd Pixel_8_Pro_API_35 -gpu swiftshader_indirect -no-snapshot-load -no-boot-anim > /tmp/emulator.log 2>&1 &"
+
+[tasks."emulator:list"]
+description = "List available emulators"
+run = "emulator -list-avds"
+
+[tasks.devices]
+description = "List connected devices/emulators"
+run = "adb devices"
+
+[tasks.run]
+description = "Install and launch the app"
+run = [
+    "adb install -r app/build/outputs/apk/debug/app-debug.apk",
+    "adb shell am start -n com.graphics.phase2b/.MainActivity"
+]
+depends = ["build"]
+
+[tasks.logcat]
+description = "Show app logs and Choreographer warnings"
+run = "adb logcat -v time | grep -E 'graphics.phase2b|Choreographer|skipped'"
+
+[tasks."debug:gpu"]
+description = "Enable GPU profiling bars on device"
+run = "adb shell settings put global debug.hwui.profile true && echo 'GPU profiling enabled. Look for bars at bottom of screen.'"
+
+[tasks."debug:gpu-off"]
+description = "Disable GPU profiling bars"
+run = "adb shell settings put global debug.hwui.profile false && echo 'GPU profiling disabled.'"
+
+[tasks."debug:fps"]
+description = "Show FPS counter on device"
+run = "adb shell settings put global show_fps 1 && echo 'FPS counter enabled (device dependent).'"
+
+[tasks."debug:fps-off"]
+description = "Disable FPS counter"
+run = "adb shell settings put global show_fps 0 && echo 'FPS counter disabled.'"
