@@ -1,5 +1,5 @@
 [tools]
-java = "17"
+java = "23"
 
 [env]
 ANDROID_HOME = "$HOME/Android/Sdk"

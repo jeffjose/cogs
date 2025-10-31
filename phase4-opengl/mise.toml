@@ -1,5 +1,5 @@
 [tools]
-java = "23"  # Phase 4 requires Java 23 for jlink support
+java = "23"
 
 [env]
 ANDROID_HOME = "$HOME/Android/Sdk"
