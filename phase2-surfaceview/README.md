@@ -72,7 +72,7 @@ phase2-surfaceview/
 │   ├── src/main/
 │   │   ├── java/com/graphics/phase2/
 │   │   │   ├── MainActivity.java           # Entry point
-│   │   │   └── SurfaceRendererView.java    # SurfaceView with render thread
+│   │   │   └── MySurfaceView.java          # Custom SurfaceView with render thread
 │   │   ├── res/
 │   │   │   └── values/styles.xml
 │   │   └── AndroidManifest.xml

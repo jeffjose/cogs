@@ -44,7 +44,7 @@ import android.view.SurfaceHolder;
  *
  * Lookup: "Android SurfaceView tutorial", "Android game loop"
  */
-public class SurfaceRendererView extends SurfaceView implements SurfaceHolder.Callback {
+public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     // Paint: Reusable drawing configuration (same as Phase 1)
     private Paint paint;
@@ -65,7 +65,7 @@ public class SurfaceRendererView extends SurfaceView implements SurfaceHolder.Ca
 
     // Constructor: Called when view is created
     // Note: We don't take AttributeSet because we're creating in code
-    public SurfaceRendererView(Context context) {
+    public MySurfaceView(Context context) {
         super(context);
         init();
     }

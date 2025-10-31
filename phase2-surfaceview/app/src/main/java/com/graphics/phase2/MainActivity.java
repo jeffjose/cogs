@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         // - Has its own window (separate surface)
         // - Can render from background thread
         // - Better for continuous animation and games
-        SurfaceRendererView surfaceView = new SurfaceRendererView(this);
+        MySurfaceView surfaceView = new MySurfaceView(this);
 
         // setContentView(): Tells Android what to display on screen
         // Same as Phase 1, but now with SurfaceView
