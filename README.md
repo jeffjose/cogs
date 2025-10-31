@@ -43,7 +43,7 @@ This project follows a progressive learning path through Android graphics APIs:
 - **[Phase 1: Canvas Drawing](phase1-canvas/)** ✅ - Custom View with Canvas API
 - **[Phase 2: SurfaceView](phase2-surfaceview/)** ✅ - Threading and surface lifecycle
 - **[Phase 2b: TextureView](phase2b-textureview/)** ✅ - View-integrated rendering with transformations
-- **Phase 3: Native ANativeWindow** 🚧 - JNI and native surfaces
+- **[Phase 3: Native ANativeWindow](phase3-nativewindow/)** ✅ - JNI and native surfaces with C++
 - **Phase 4a: OpenGL ES** - GPU-accelerated rendering with EGL
 - **Phase 4b: Vulkan** - Modern low-level GPU API
 - **Phase 5: SurfaceControl + Transaction** - Direct compositor access with atomic updates
