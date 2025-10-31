@@ -36,6 +36,31 @@ emulator -list-avds
 emulator -avd Pixel_8_Pro_API_35 &
 ```
 
-## Next Steps
-- Create a native C++ project with Vulkan or OpenGL ES
-- Build a simple "hello world" graphics demo (clear screen, render triangle)
+## Project Structure
+
+This project follows a progressive learning path through Android graphics APIs:
+
+- **[Phase 1: Canvas Drawing](phase1-canvas/)** ✅ - Custom View with Canvas API
+- **Phase 2: SurfaceView** 🚧 - Threading and surface lifecycle
+- **Phase 3: Native ANativeWindow** - JNI and native surfaces
+- **Phase 4: OpenGL ES / Vulkan** - GPU-accelerated rendering
+- **Phase 5: SurfaceControl** - Direct compositor access
+- **Phase 6: HardwareBuffer** - Cross-API buffer sharing
+
+See [docs/PLAN.md](docs/PLAN.md) for detailed learning objectives.
+
+## Quick Start
+
+Each phase has its own directory with:
+
+- `mise.toml` - Task definitions (`mise run build`, `mise run install`)
+- `build.sh` / `install.sh` - Convenience scripts
+- `README.md` - Phase-specific documentation
+- `DX_OBSERVATIONS.md` - Developer experience notes
+
+To build any phase:
+```bash
+cd phase1-canvas
+mise run build
+mise run install
+```

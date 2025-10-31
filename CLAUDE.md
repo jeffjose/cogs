@@ -1,0 +1,1 @@
+- for all the apps, we need to create mise commands like @phase1-canvas/mise.toml .
