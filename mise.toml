@@ -1,0 +1,157 @@
+[tools]
+java = "23"
+
+[env]
+ANDROID_HOME = "$HOME/Android/Sdk"
+DISPLAY = ":1"
+
+[tasks.setup]
+description = "Setup environment for all phases"
+run = """
+#!/bin/bash
+set -e
+
+echo "========================================="
+echo "COGS - Android Graphics Pipeline Setup"
+echo "========================================="
+echo ""
+
+# Colors
+GREEN='\\033[0;32m'
+YELLOW='\\033[1;33m'
+RED='\\033[0;31m'
+NC='\\033[0m'
+
+echo -e "${GREEN}✓${NC} mise is running..."
+echo ""
+
+# Install Java 23
+echo "Installing Java 23..."
+mise install java@23
+echo -e "${GREEN}✓${NC} Java 23 installed"
+
+# Install dependencies for all phases
+echo ""
+echo "Installing dependencies for all phases..."
+PHASES=(
+    "phase1-canvas"
+    "phase2-surfaceview"
+    "phase2b-textureview"
+    "phase3-nativewindow"
+    "phase4-opengl"
+)
+
+for phase in "${PHASES[@]}"; do
+    if [ -d "$phase" ]; then
+        echo "  Setting up $phase..."
+        (cd "$phase" && mise install)
+        if [ -f "$phase/gradlew" ]; then
+            chmod +x "$phase/gradlew"
+        fi
+        echo -e "    ${GREEN}✓${NC} $phase ready"
+    fi
+done
+
+# Check Android SDK
+echo ""
+echo "Checking Android SDK..."
+if [ -z "$ANDROID_HOME" ]; then
+    if [ -d "$HOME/Android/Sdk" ]; then
+        echo -e "${YELLOW}⚠${NC} ANDROID_HOME not set, but Android SDK found at $HOME/Android/Sdk"
+        echo "  mise.toml sets ANDROID_HOME=\\$HOME/Android/Sdk for tasks"
+    else
+        echo -e "${RED}✗${NC} Android SDK not found at $HOME/Android/Sdk"
+        echo "  Please install Android SDK from: https://developer.android.com/studio"
+    fi
+else
+    echo -e "${GREEN}✓${NC} ANDROID_HOME: $ANDROID_HOME"
+fi
+
+# Check Android tools
+echo ""
+if command -v adb &> /dev/null; then
+    echo -e "${GREEN}✓${NC} adb: $(adb --version | head -n1)"
+else
+    echo -e "${RED}✗${NC} adb not found - add \\$ANDROID_HOME/platform-tools to PATH"
+fi
+
+if command -v emulator &> /dev/null; then
+    echo -e "${GREEN}✓${NC} emulator: available"
+else
+    echo -e "${YELLOW}⚠${NC} emulator not found - add \\$ANDROID_HOME/emulator to PATH"
+fi
+
+echo ""
+echo "========================================="
+echo "Setup complete!"
+echo "========================================="
+echo ""
+echo "To build and run any phase:"
+echo "  cd phase1-canvas"
+echo "  mise run build"
+echo "  mise run run"
+echo ""
+echo "Or run tasks from root:"
+echo "  mise run build-all"
+echo "  mise run list-tasks"
+echo ""
+"""
+
+[tasks."build-all"]
+description = "Build all phases"
+run = """
+#!/bin/bash
+set -e
+for phase in phase1-canvas phase2-surfaceview phase2b-textureview phase3-nativewindow phase4-opengl; do
+    if [ -d "$phase" ]; then
+        echo "Building $phase..."
+        (cd "$phase" && mise run build)
+    fi
+done
+echo "All phases built successfully!"
+"""
+
+[tasks."clean-all"]
+description = "Clean all phases"
+run = """
+#!/bin/bash
+set -e
+for phase in phase1-canvas phase2-surfaceview phase2b-textureview phase3-nativewindow phase4-opengl; do
+    if [ -d "$phase" ]; then
+        echo "Cleaning $phase..."
+        (cd "$phase" && mise run clean)
+    fi
+done
+echo "All phases cleaned!"
+"""
+
+[tasks."list-tasks"]
+description = "List available tasks in all phases"
+run = """
+#!/bin/bash
+echo "Root tasks:"
+mise tasks
+echo ""
+echo "Phase-specific tasks (cd into phase directory and run 'mise tasks'):"
+for phase in phase1-canvas phase2-surfaceview phase2b-textureview phase3-nativewindow phase4-opengl; do
+    if [ -d "$phase" ]; then
+        echo "  $phase: build, install, clean, run, emulator, devices, logcat, debug:*, etc."
+    fi
+done
+"""
+
+[tasks.emulator]
+description = "Start Android emulator"
+run = "emulator -avd Pixel_8_Pro_API_35 -gpu swiftshader_indirect -no-snapshot-load -no-boot-anim"
+
+[tasks."emulator:bg"]
+description = "Start Android emulator in background"
+run = "emulator -avd Pixel_8_Pro_API_35 -gpu swiftshader_indirect -no-snapshot-load -no-boot-anim > /tmp/emulator.log 2>&1 &"
+
+[tasks."emulator:list"]
+description = "List available Android emulators"
+run = "emulator -list-avds"
+
+[tasks.devices]
+description = "List connected Android devices/emulators"
+run = "adb devices"
