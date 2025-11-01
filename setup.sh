@@ -35,9 +35,9 @@ else
     echo -e "${YELLOW}⚠${NC} Java 23 might already be installed"
 fi
 
-# Verify Java installation
+# Verify phases and setup Gradle wrappers
 echo ""
-echo "Verifying Java installation in each phase..."
+echo "Setting up phases..."
 PHASES=(
     "phase1-canvas"
     "phase2-surfaceview"
@@ -48,9 +48,13 @@ PHASES=(
 
 for phase in "${PHASES[@]}"; do
     if [ -d "$phase" ]; then
-        echo "  Checking $phase..."
-        (cd "$phase" && mise install)
-        echo -e "    ${GREEN}✓${NC} $phase dependencies installed"
+        echo "  Setting up $phase..."
+        if [ -f "$phase/gradlew" ]; then
+            chmod +x "$phase/gradlew"
+            echo -e "    ${GREEN}✓${NC} $phase ready (gradlew executable)"
+        else
+            echo -e "    ${RED}✗${NC} $phase/gradlew missing!"
+        fi
     fi
 done
 
@@ -103,20 +107,6 @@ if [ -z "$DISPLAY" ]; then
 else
     echo -e "${GREEN}✓${NC} DISPLAY is set to: $DISPLAY"
 fi
-
-# Check Gradle wrappers
-echo ""
-echo "Checking Gradle wrappers..."
-for phase in "${PHASES[@]}"; do
-    if [ -d "$phase" ]; then
-        if [ -f "$phase/gradlew" ]; then
-            echo -e "  ${GREEN}✓${NC} $phase/gradlew exists"
-            chmod +x "$phase/gradlew"
-        else
-            echo -e "  ${RED}✗${NC} $phase/gradlew missing!"
-        fi
-    fi
-done
 
 # Summary
 echo ""
